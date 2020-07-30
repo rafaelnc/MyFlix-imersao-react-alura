@@ -4,18 +4,42 @@ import { VideoCardGroupContainer, Title, ExtraLink } from './styles';
 import VideoCard from './components/VideoCard';
 import Slider, { SliderItem } from './components/Slider';
 
+
 function Carousel({
-  ignoreFirstVideo,
   category,
+  position,
+  ignoreFirstVideo= false,
+ 
+  
 }) {
+
+  
   const categoryTitle = category.titulo;
   const categoryColor = category.cor;
   const categoryExtraLink = category.link_extra;
   const videos = category.videos;
+
+  React.useEffect(() => {
+    
+    const onScroll = e => {
+  
+      const scrollTop = e.target.documentElement.scrollTop;
+        let elementPosition = position - scrollTop;
+
+          if(elementPosition >= -100 && elementPosition <= 100){
+          document.querySelector(".Menu").style.setProperty("border-bottom-color",categoryColor);
+        }
+    };
+    window.addEventListener("scroll", onScroll);
+  
+    return () => window.removeEventListener("scroll", onScroll);
+  });
+
   return (
     <VideoCardGroupContainer>
       {categoryTitle && (
         <>
+    
           <Title style={{ backgroundColor: categoryColor || 'red' }}>
             {categoryTitle}
           </Title>
@@ -28,7 +52,7 @@ function Carousel({
       )}
       <Slider>
         {videos.map((video, index) => {
-          if (ignoreFirstVideo && index === 0) {
+          if (ignoreFirstVideo===0 && index === 0) {
             return null;
           }
 

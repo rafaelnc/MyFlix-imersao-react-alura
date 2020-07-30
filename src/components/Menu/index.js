@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function Menu() {
     return (
         <header>
-           <nav className="Menu">
+           <nav className="Menu" style={{borderBottomColor : "red"}}>
                <Link to="/">
                     <img className="Logo" src={Logo} alt="My FLix" />
                </Link>
